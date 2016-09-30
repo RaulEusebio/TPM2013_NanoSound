@@ -14,7 +14,8 @@ This function need 4 characters correspondig to file name to play.
 # stop_playback(), next_playback(), previous_playback:
 As the name indicated are for stop, next and previous playback.
 
-Finally exist # volume_control(int volume)
+Finally exist
+# volume_control(int volume)
 This function set up the volume in a range from 00 to 31 (00 is mute and 31 is maximal value)
 
 
