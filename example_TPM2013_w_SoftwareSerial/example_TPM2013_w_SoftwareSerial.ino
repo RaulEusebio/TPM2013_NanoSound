@@ -1,25 +1,33 @@
 /*
 * TPM2013_nanoSound.ino: Example of use of the library TPM2013_nanoSound
+* For use with SoftwareSerial
 * 
-* The module use Serial commnication. 
-* This example use especifically an Arduino MEGA because have more of one serial port
-* and the modele is connected in Serial1 of the Arduino MEGA.
 * 
 * Author: Raul Eusebio
 */
+
+#include <SoftwareSerial.h>    
 #include "TPM2013_nanoSound.h"
-
-
 
 int x = 1;
 char incomingByte2 = 0;
 int incomingByte = 0;  
 
-TPM2013_nanoSound TPM2013(Serial1); // Initialization of library sound
+
+// Pins for the module sound
+int rx_sound = 14;  // A0 pin
+int tx_sound = 15;   // A1 pin
+
+
+// Setup of characteristics from nano sound module
+SoftwareSerial mySerial(rx_sound, tx_sound);
+
+// The library set up in correct bauds for "mySerial"
+TPM2013_nanoSound TPM2013(mySerial); // Initialization of library sound
 
 void setup() {
   Serial.begin(9600);
-  Serial1.begin(9600);
+
 }
 
 void loop(){
@@ -51,9 +59,6 @@ void loop(){
   }
 
   incomingByte2 = 0;  // reset the variable
-
-  // This code receive data from the terminal user 
-  // commands to control de module
   if (Serial.available() > 0) {
     // read the incoming byte:
     incomingByte2 = Serial.read();
@@ -61,14 +66,13 @@ void loop(){
     Serial.print("I received: ");
     Serial.println(incomingByte2, DEC);
   }
-
   
-  // This part is for the reply of the audio module
-  if (Serial1.available() > 0) {
+      
+  if (mySerial.available() > 0) {
     // read the incoming byte:
-    incomingByte = Serial1.read();
+    incomingByte = mySerial.read();
     // say what you got:
-    Serial.print("AudioTPM: ");
+    Serial.print("I receivedww: ");
     Serial.println(incomingByte, DEC);
   }
 
